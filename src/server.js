@@ -10,7 +10,7 @@ app.set('view engine', 'pug');
 
 //bodyparser
 app.use(express.urlencoded({extended:true}))
-app.use(cookieParser())
+app.use(cookieParser(process.env.COOKIE_SECRET))
 
 app.get("/", (req, res) => {
     res.render("home");
@@ -48,12 +48,12 @@ app.get("/posts", async(req, res) => {
             title:"글7"
         }
     ]
-
+    console.log(req.cookies,req.signedCookies);
     const header = {
         method:'POST',
         headers: {
             method: 'GET',
-            Authorization:`Bearer ${req.cookies.accessToken}`
+            Authorization:`Bearer ${req.signedCookies.accessToken}`
         }
     }
     const fullURL = req.protocol + '://' + req.get('host');
