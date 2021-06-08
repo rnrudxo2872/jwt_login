@@ -7,7 +7,7 @@ export const login = (req, res) => {
     
     //무조건 로그인이 된다는 조건.
     const accessToken = jwt.sign(user, process.env.JWT_SECRET);
-    res.cookie("accessToken", accessToken, { maxAge: 300000, signed:true });
+    res.cookie("accessToken", accessToken, { maxAge: 300000, signed:true, httpOnly:true});
     console.log(accessToken);
 
     return res.redirect('/');
