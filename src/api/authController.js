@@ -14,15 +14,16 @@ export const login = (req, res) => {
 }
 
 export const getUserId = async (req, res) => {
-    console.log("ewfwefwefwefwqㅈㄷㄹㅈㄷ럊ㄷ러ㅐㅈ더래ㅑㅈ더래ㅑㅈ더");
     const authHeader = req.headers['authorization'];
+    console.log("헤더 : ",req.headers);
+    console.log(authHeader);
     const token = authHeader.split(' ')[1];
     console.log(req.header);
 
     await jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err)
             return res.end();
-        return res.send(user.json());
+        return res.json(user);
     })
 }
 

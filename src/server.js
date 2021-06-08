@@ -50,17 +50,18 @@ app.get("/posts", async(req, res) => {
     ]
 
     const header = {
+        method:'POST',
         headers: {
-            method: 'POST',
+            method: 'GET',
             Authorization:`Bearer ${req.cookies.accessToken}`
         }
     }
     const fullURL = req.protocol + '://' + req.get('host');
     const user = await (await fetch(`${fullURL}/getUser`, header)).json();
     console.log(user);
-    return res.render("posts", {posts:posts.map(item => item.id === user.id)})
+    console.log(posts.map(item => item.id === user.id));
+    return res.render("posts", {posts:posts.filter(item => item.id === user.id)})
 })
 
 app.post("/getUser",getUserId)
-
 export default app;
